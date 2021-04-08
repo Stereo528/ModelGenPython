@@ -23,9 +23,6 @@ while True:
         saveLocation = sg.popup_get_folder(f"Folder to save {values[2]}.json To", title="Save Location", default_path="", no_window=True)
         with open(f"{saveLocation}/{values[2]}.json", "w") as JsonOpen:
             JsonLayout = {
-
-                #"{\n\"parent\": \"{values[3]}:{values[1]}\",\n\"textures\": {\n\t\"all\": \"{values[3]}:{values[1]}/{values[2]}\"\n}"
-                
                     "parent": f"{values[3]}:" f"{values[0]}",
                     "textures": {
                         "all": f"{values[3]}:" f"{values[1]}/{values[2]}"
