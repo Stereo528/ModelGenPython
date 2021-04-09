@@ -5,8 +5,7 @@ import os
 
 #print(f"Using PySimpleGUI Version: {sg.version}")
 
-openLastDir = open("lastdir.json", "r")
-lastUsedDir = json.load(openLastDir)
+
 
 sg.theme('DarkGrey4')   # Add a little color to your windows
 # All the stuff inside your window. This is the PSG magic code compactor...
@@ -25,7 +24,7 @@ while True:
     event, values = window.read()
 
     if (event == "!"):
-        sg.popup_non_blocking("Only use after you have chosen to save a file, it will save to the current folder otherwise! \nNOTE: Not persistant throughout sessions.")
+        sg.popup_non_blocking("Only use after you have chosen to save a file, it will save to the current folder otherwise!")
 
     if (event == sg.WINDOW_CLOSE_ATTEMPTED_EVENT or event == 'Close') and sg.popup_yes_no('Do you really want to exit?') == 'Yes':
         openLastDir.close()
@@ -33,9 +32,9 @@ while True:
     if event == "Save":
         #If the checkbox to save directly to last used folder without the popup, is not checked, give the popup, otherwise dont.
         if values[4] == False:
-            #This is really buggy because it will pull whatever was saved *last* time, not every time you open the menu, even if the json has been updated
-            #im not sure how to update it everytime, probably going to be something in the while True loop here or something
-            #its gonna be a headache though
+            openLastDir = open("lastdir.json", "r")
+            lastUsedDir = json.load(openLastDir)
+            openLastDir.close()
             saveLocation = sg.popup_get_folder(f"Folder to save {values[2]}.json To", title="Save Location", default_path=lastUsedDir["lastFolder"])
         elif values[4] == True:
             saveLocation = lastUsedDir["lastFolder"]
