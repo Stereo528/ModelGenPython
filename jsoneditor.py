@@ -30,11 +30,11 @@ while True:
         openLastDir.close()
         break
     if event == "Save":
+        openLastDir = open("lastdir.json", "r")
+        lastUsedDir = json.load(openLastDir)
+        openLastDir.close()
         #If the checkbox to save directly to last used folder without the popup, is not checked, give the popup, otherwise dont.
         if values[4] == False:
-            openLastDir = open("lastdir.json", "r")
-            lastUsedDir = json.load(openLastDir)
-            openLastDir.close()
             saveLocation = sg.popup_get_folder(f"Folder to save {values[2]}.json To", title="Save Location", default_path=lastUsedDir["lastFolder"])
         elif values[4] == True:
             saveLocation = lastUsedDir["lastFolder"]
