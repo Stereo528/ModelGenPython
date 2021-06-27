@@ -26,7 +26,7 @@ while True:
     if (event == "!"):
         sg.popup_non_blocking("Only use after you have chosen to save a file, it will save to the current folder otherwise!")
 
-    if (event == sg.WINDOW_CLOSE_ATTEMPTED_EVENT or event == 'Close') and sg.popup_yes_no('Do you really want to exit?') == 'Yes':
+    if (event == sg.WINDOW_CLOSE_ATTEMPTED_EVENT or event == 'Close'):
         openLastDir.close()
         break
     if event == "Save":
@@ -39,7 +39,6 @@ while True:
                     "lastFolder": "./"
                 }
                 JsonDump = json.dump(JsonWrite, JsonInitWrite, indent=4)
-            openLastDir.close()
             openLastDir = open("lastdir.json", "r")
             lastUsedDir = json.load(openLastDir)
 
