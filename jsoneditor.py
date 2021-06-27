@@ -9,7 +9,7 @@ import os
 
 sg.theme('DarkGrey4')   # Add a little color to your windows
 # All the stuff inside your window. This is the PSG magic code compactor...
-layout = [  [sg.Text('Parent Model'), sg.InputText("block/cube_all")],
+layout = [  [sg.Text('Parent Model'), sg.Combo(["block/cube_all", "block/cube", "block/pillar"])],
             [sg.Text('Block/Item'), sg.InputText("block")],
             [sg.Text('Name'), sg.InputText("birch_planks")],
             [sg.Text('ModID'), sg.InputText("minecraft")],
@@ -20,7 +20,7 @@ layout = [  [sg.Text('Parent Model'), sg.InputText("block/cube_all")],
 # Create the Window
 window = sg.Window('Minecraft Model Generator', layout)
 # Event Loop to process "events"
-while True:             
+while True:
     event, values = window.read()
 
     if (event == "!"):
@@ -30,8 +30,20 @@ while True:
         openLastDir.close()
         break
     if event == "Save":
-        openLastDir = open("lastdir.json", "r")
-        lastUsedDir = json.load(openLastDir)
+        try:
+            openLastDir = open("lastdir.json", "r")
+            lastUsedDir = json.load(openLastDir)
+        except Exception as e:
+            with open("lastdir.json", "w") as JsonInitWrite:
+                JsonWrite = {
+                    "lastFolder": "./"
+                }
+                JsonDump = json.dump(JsonWrite, JsonInitWrite, indent=4)
+            openLastDir.close()
+            openLastDir = open("lastdir.json", "r")
+            lastUsedDir = json.load(openLastDir)
+
+
         openLastDir.close()
         #If the checkbox to save directly to last used folder without the popup, is not checked, give the popup, otherwise dont.
         if values[4] == False:
